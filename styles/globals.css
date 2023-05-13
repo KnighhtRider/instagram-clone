@@ -7,6 +7,8 @@
   .navBtn {
     @apply hidden h-6 md:inline-flex cursor-pointer
     hover:scale-125 transition-all duration-150 ease-out
-
+  }
+  .storyPop {
+    @apply hover:scale-110 transition-all duration-150 ease-out
   }
 }
