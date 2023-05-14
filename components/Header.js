@@ -51,7 +51,12 @@ function Header() {
           </div>
           <PlusCircleIcon className='navBtn' />
           <UserGroupIcon className='navBtn' />
+
+          <div className='relative navBtn'>
           <HeartIcon className='navBtn' />
+          <div className='absolute -right-0 text-xs w-2 h-2 bg-red-500 rounded-full flex items-center justify-center text-white'></div>
+          </div>
+
           <Image src={vivek}
             alt='profile pic'
             className='w-10 h-10 rounded-full cursor-pointer'

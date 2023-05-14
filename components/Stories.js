@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { useEffect, useState } from "react";
 import Story from "./Story";
 
-console.log(faker)
+// console.log(faker)
 
 function Stories() {
 
@@ -17,7 +17,7 @@ function Stories() {
 
 
   return (
-    <div className='flex space-x-2 p-6 bg-white mt-8 border-gray-200 border rounded-sm overflow-x-scroll scrollbar-thin scrollbar-thumb-black' >
+    <div className='flex space-x-4 p-5 bg-white mt-5 rounded-sm overflow-x-scroll scrollbar-thin scrollbar-thumb-black' >
       {suggestions.map(profile => (
         <Story 
           key={faker.string.uuid()} 
