@@ -13,11 +13,16 @@ import {
   MenuIcon,
 } from "@heroicons/react/outline";
 import {HomeIcon} from "@heroicons/react/solid";
-import Modal from "./Modal";
+
+
+import Login from "./Login";
+import { useRecoilState } from "recoil";
+import { modalState } from "@/atoms/modalAtom";
+
 
 function Header() {
 
-
+  const [open, setOpen] = useRecoilState(modalState);
 
   return (
     <div className='shadow-sm border-b bg-white sticky top-0 z-50'>
@@ -56,7 +61,11 @@ function Header() {
           </div>
           
           
-          <PlusCircleIcon className='navBtn' />
+          <PlusCircleIcon 
+            onClick={() => setOpen(true)} 
+            className='navBtn' 
+            
+          />
           
 
 
