@@ -2,19 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer components {
   .navBtn {
     @apply hidden h-6 md:inline-flex cursor-pointer
-    hover:scale-125 transition-all duration-150 ease-out
+    hover:scale-125 transition-all duration-150 ease-out;
   }
   .storyPop {
-    @apply hover:scale-110 transition-all duration-150 ease-out
+    @apply hover:scale-110 transition-all duration-150 ease-out;
   }
 
   .btn {
     @apply h-7 hover:scale-125 cursor-pointer
-    transition-all duration-150 ease-out
+    transition-all duration-150 ease-out;
+  }
+
+  .instagram-logo {
+    background-position: 0 -130px;
+    height: 51px;
+    width: 175px;
+    background-image: url(https://bit.ly/3v2LT17);
+  }
+
+  .facebook-logo {
+    background-position: -414px -259px;
+    background-image: url(https://bit.ly/3v2LT17);
+    height: 16px;
+    width: 16px;
+  }
+
+  .apple-store-logo {
+    background-position: -132px -182px;
+    height: 42px;
+    width: 128px;
+    background-image: url(https://bit.ly/3v2LT17);
+  }
+  .google-store-logo {
+    background-position: 0 -182px;
+    height: 42px;
+    width: 130px;
+    background-image: url(https://bit.ly/3v2LT17);
   }
 
 }
