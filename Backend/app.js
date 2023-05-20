@@ -1,5 +1,9 @@
 const express = require('express')
 const app = express();
+const cors = require('cors')
+
+
+app.use(cors())
 
 const mongoose = require('mongoose');
 const mongoUrl = require('./secrets/keys')
@@ -22,7 +26,15 @@ mongoose.connect(mongoUrl)
   console.log(err);
 })
 
+app.get('/', (req, res) => {
+  res.json({
+    'name': "Jos Butler",
+    'age': '45'
+  })
+})
 
+
+/* server running on port 3000 */
 app.listen(3000, () => {
   console.log('server is running on port 3000');
 })

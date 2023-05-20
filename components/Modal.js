@@ -11,7 +11,13 @@ function Modal() {
   const filePickerRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null)
 
-  const addImageToPost = (e) => {
+  const [caption, setCaption] = useState("")
+  const [image, setImage] = useState("")
+  const [url, setUrl] = useState("")
+
+
+  /* Adding Image To Post Modal */
+  function addImageToPost(e) {
     const reader = new FileReader();
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
@@ -23,11 +29,43 @@ function Modal() {
   }
 
 
+  /* posting image to cloudinary */
+  const postDetails = () => {
+    console.log(caption, image);
+
+    const data = new FormData();
+
+    data.append("file", image)
+    data.append("upload_preset", "instagram-clone")
+    data.append("cloud_name", "fantacloud")
+
+    fetch('https://api.cloudinary.com/v1_1/fantacloud/image/upload', {
+      method: 'post',
+      caption:data
+    }).then((res) => res.json())
+    .then(data => setUrl(data.url))
+    .catch((err) => console.log(err))
+
+
+    /* Saving Post to MongoDB */
+    fetch('http://localhost:5000/createpost', {
+      method : 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        caption,
+        pic:url
+      })
+    }).then((res) => res.json())
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err))
+
+  }
 
 
   return (
     <Transition.Root show={open} as={Fragment}>
-
       <Dialog
         as='div'
         className=' fixed z-10 inset-0 overflow-y-auto'
@@ -64,6 +102,7 @@ function Modal() {
             leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
           >
 
+            {/* Image and Caption Below */}
             <div className=' inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left
       overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6'>
               <div>
@@ -102,12 +141,20 @@ function Modal() {
                         ref={filePickerRef}
                         type='file'
                         hidden
-                        onChange={addImageToPost}
+                        onChange={(e) => {
+                          addImageToPost(e)
+                          setImage(e.target.files[0])
+                        }}
+                        
                       />
                     </div>
 
                     <div className='mt-2'>
                       <input
+                        value={caption}
+                        onChange={(e) => {
+                          setCaption(e.target.value)
+                        }}
                         className=' border-none focus:ring-0 w-full text-center'
                         type='text'
                         placeholder='Please Enter a Caption...'
@@ -124,6 +171,7 @@ function Modal() {
               py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none
               focus:ring-2 focus:ring-offset-2 foucs:ring-red-500 sm:text-sm disabled:bg-gray-300
               disabled:cursor-not-allowed hover:disabled:bg-gray-300'
+                  onClick={() => {postDetails()}}
                   >
                     Upload Post
                   </button>
