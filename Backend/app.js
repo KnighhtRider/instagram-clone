@@ -1,54 +1,32 @@
-
-
+const express = require('express')
+const app = express();
 
 const mongoose = require('mongoose');
+const mongoUrl = require('./secrets/keys')
 
-mongoose.connect('mongodb://localhost:27017/instagram')
+/* user models import */
+require('./models/model')
+require('./models/post')
+
+app.use(express.json())
+
+app.use(require('./routes/auth'))
+app.use(require('./routes/createpost'))
+
+/* db connection  */
+mongoose.connect(mongoUrl)
 .then(() => {
-  console.log("connected succesfully...");
+  console.log("Yeah! DB Connected Succesfully...");
 })
 .catch((err) => {
   console.log(err);
 })
 
 
-const userSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    minLength: 6,
-  },
-  confirmPassword: {
-    type: String,
-    required: true,
-    minLength: 6,
-  },
-
+app.listen(3000, () => {
+  console.log('server is running on port 3000');
 })
 
 
-// models 
-const userModel = mongoose.model('userModel',userSchema)
 
-async function createUser() {
-  let user = {
-    name: "Sakshi",
-    email: 'abcde@gmail.com',
-    password: '1234567',
-    confirmPassword: '1234567',
-  };
 
-  let data =await userModel.create(user)
-  console.log(data);
-}
-
-createUser();

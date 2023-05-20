@@ -22,7 +22,7 @@ function Modal() {
     }
   }
 
-  
+
 
 
   return (
@@ -68,11 +68,11 @@ function Modal() {
       overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6'>
               <div>
                 {selectedFile ? (
-                  <img 
-                    src={selectedFile} 
+                  <img
+                    src={selectedFile}
                     className=' w-full object-contain cursor-pointer'
-                    onClick={() => setSelectedFile(null)} 
-                    alt='' 
+                    onClick={() => setSelectedFile(null)}
+                    alt=''
                   />
                 ) : (
                   <div
