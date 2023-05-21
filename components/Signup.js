@@ -1,17 +1,60 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation'
+
 
 function Signup() {
 
-  const fetchData = async() => {
-    const respose = await fetch("http://localhost:3000")
-    const data = await respose.json()
-    console.log(data);
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
+  const router = useRouter();
   
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+
+  /* Toast functions */
+  const notifyA = (msg) => toast.error(msg)
+  const notifyB = (msg) => toast.success(msg)
+
+  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+
+
+  const postData = () => {
+
+    /* Regex Checking email */
+    if(!emailRegex.test(email)) {
+      notifyA('Invalid Email')
+      return
+    } else if (!passRegex.test(password)) {
+      notifyA('Your password must be have at least 8 characters long 1 uppercase and 1 lowercase character 1 number')
+      return
+    }
+    
+    /* Sending data to server */
+    fetch('http://localhost:3000/signup', {
+      method:'post',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({
+        name: name,
+        userName: userName,
+        email: email,
+        password: password
+      })
+    }).then((res) => res.json())
+    .then((data) => {
+      if(data.error) {
+        notifyA(data.error)
+      } else {
+        notifyB(data.message);
+        router.push('/login')
+      }
+      console.log(data)
+    })
+
+  }
 
 
   return (
@@ -36,13 +79,15 @@ function Signup() {
             <span className="bg-gray-300 h-px flex-grow t-2 relative top-2"></span>
           </div>
 
-          <form className="mt-8 w-64 flex flex-col">
+          <div className="mt-8 w-64 flex flex-col">
             <input
               autofocus
               className="text-xs w-full mb-2 rounded border bg-gray-100 border-gray-300 px-2 py-2 focus:outline-none focus:border-gray-400 active:outline-none"
               id="email"
               placeholder="Mobile number or Email"
               type="text"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value) }}
             />
             <input
               autofocus
@@ -50,6 +95,8 @@ function Signup() {
               id="full-name"
               placeholder="Full Name"
               type="text"
+              value={name}
+              onChange={(e) => { setName(e.target.value) }}
             />
             <input
               autofocus
@@ -57,6 +104,8 @@ function Signup() {
               id="username"
               placeholder="Username"
               type="text"
+              value={userName}
+              onChange={(e) => { setUserName(e.target.value) }}
             />
             <input
               autofocus
@@ -64,11 +113,18 @@ function Signup() {
               id="password"
               placeholder="Password"
               type="password"
-            ></input>
-            <a className=" text-sm text-center bg-blue-300 text-white py-1 rounded font-medium">
-              Sign up
-            </a>
-          </form>
+              value={password}
+              onChange={(e) => { setPassword(e.target.value) }}
+            />
+
+
+            <input className="mt-4 flex bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded w-64 justify-center cursor-pointer"
+              type='submit' id='submit-btn' value='Sign up'
+              onClick={() => { postData() }}
+            />
+
+          </div>
+
         </div>
         <div class="bg-white border border-gray-300 text-center w-80 py-4">
           <span class="text-sm">Have an account?</span>

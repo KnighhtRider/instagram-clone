@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 
+/Backend/secrets/
+
 # testing
 /coverage
 
@@ -35,4 +37,3 @@ yarn-error.log*
 next-env.d.ts
 
 
-/secrets

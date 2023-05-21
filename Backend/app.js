@@ -3,10 +3,9 @@ const app = express();
 const cors = require('cors')
 
 
-app.use(cors())
-
 const mongoose = require('mongoose');
-const mongoUrl = require('./secrets/keys')
+const { mongoUrl } = require('./secrets/keys')
+app.use(cors())
 
 /* user models import */
 require('./models/model')
@@ -15,7 +14,7 @@ require('./models/post')
 app.use(express.json())
 
 app.use(require('./routes/auth'))
-app.use(require('./routes/createpost'))
+// app.use(require('./routes/createpost'))
 
 /* db connection  */
 mongoose.connect(mongoUrl)
@@ -32,6 +31,8 @@ app.get('/', (req, res) => {
     'age': '45'
   })
 })
+
+
 
 
 /* server running on port 3000 */
