@@ -12,9 +12,9 @@ function Modal() {
   const filePickerRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null)
 
-  const [caption, setCaption] = useRecoilState(modalCaption)
+  const [caption, setCaption] = useState('')
   const [image, setImage] = useState("")
-  const [url, setUrl] = useRecoilState(modalUrl)
+  const [url, setUrl] = useState('')
 
 
   /* Adding Image To Post Modal */
@@ -53,7 +53,8 @@ function Modal() {
     fetch("http://localhost:5000", {
       method: 'post',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
       },
       body: JSON.stringify({
         caption,

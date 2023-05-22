@@ -28,7 +28,7 @@ function Post({ id, username, userImg, img, caption }) {
       <div className='w-full relative'>
         <img src={img}
           alt='Post Image'
-          className='object-cover h-screen'
+          className='object-contain h-auto border transition-shadow rounded-lg max-w-full'
         />
       </div>
 

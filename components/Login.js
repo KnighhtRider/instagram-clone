@@ -45,8 +45,8 @@ function Login() {
         notifyA(data.error)
       } else {
         notifyB(data.message);
-        console.log(data.token);
-        localStorage.setItem('jwt', data.token)
+        console.log(data);
+        localStorage.setItem('jwt', data)
         router.push('/')
       }
       console.log(data)
