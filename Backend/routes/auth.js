@@ -9,10 +9,6 @@ const { Jwt_secret } = require('../secrets/keys')
 
 
 
-router.get('/createpost', requireLogin, (req, res) => {
-  console.log('hello auth');
-})
-
 
 router.get('/signup', (req, res) => {
   res.send('<h1>I am Get Request From Sign Up.</h1>')
@@ -51,9 +47,13 @@ router.post('/signup', (req, res) => {
 
 })
 
+router.get('/login', (req, res) => {
+  res.send('<h1>Get request from Login Page</h1>');
+})
 
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
+  console.log(req.body)
 
   if (!email || !password) {
     return res.status(422).json({ error: "Please add email and password" })

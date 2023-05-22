@@ -30,7 +30,7 @@ function Login() {
     }
     
     /* Sending data to server */
-    fetch('http://localhost:3000/login', {
+    fetch('http://localhost:5000/login', {
       method:'post',
       headers:{
         'Content-Type': 'application/json'

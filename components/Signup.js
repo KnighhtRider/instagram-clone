@@ -22,6 +22,13 @@ function Signup() {
 
   const postData = () => {
 
+    console.log({
+      name,
+      email,
+      userName,
+      password
+    })
+
     /* Regex Checking email */
     if(!emailRegex.test(email)) {
       notifyA('Invalid Email')
@@ -32,7 +39,7 @@ function Signup() {
     }
     
     /* Sending data to server */
-    fetch('http://localhost:3000/signup', {
+    fetch('http://localhost:5000/signup', {
       method:'post',
       headers:{
         'Content-Type': 'application/json'

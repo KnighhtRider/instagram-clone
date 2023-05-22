@@ -1,7 +1,28 @@
 import { atom } from "recoil";
 import { React } from 'react';
+import { RecoilEnv } from 'recoil';
 
-export const modalState = atom({
-  key: 'modalState',
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
+
+const modalState = atom({
+  key: 'state',
   default: false,
 })
+
+const modalCaption = atom({
+  key: 'caption',
+  default: '',
+})
+
+const modalUrl = atom({
+  key: 'url',
+  default: '',
+})
+
+
+export {
+  modalState,
+  modalCaption,
+  modalUrl
+
+}

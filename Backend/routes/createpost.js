@@ -1,7 +1,13 @@
+// import { modalCaption, modalUrl } from '@/atoms/modalAtom'
+// import React from 'react'
+// import { useRecoilState } from 'recoil'
+
+
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const requireLogin = require('../middlewares/requireLogin');
+// const requireLogin = require('../middlewares/requireLogin');
+
 
 const POST = mongoose.model('POST');
 
@@ -11,16 +17,17 @@ const POST = mongoose.model('POST');
 // })
 
 
-router.post('/createpost', requireLogin, (req, res) => {
-  const {title, body} = req.body;
-  if(!title || !body) {
-    return res.status(422).json({error: "Please Add all the fields"})
-  } 
-  
+router.post('/', (req, res) => {
+  // console.log(req.body)
+  const {caption, pic} = req.body;
+  // console.log(pic);
+  if(!caption || !pic) {
+    return res.status(422).json({error: 'Please Add all the Fields'})
+  }
+
   const post = new POST({
-    title,
-    body,
-    postedBy:req.user
+    caption,
+    photo:pic
   })
 
 
@@ -29,6 +36,10 @@ router.post('/createpost', requireLogin, (req, res) => {
   }).catch((err) => console.log(err))
 
 })
+
+
+  
+
 
 
 

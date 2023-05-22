@@ -14,7 +14,7 @@ require('./models/post')
 app.use(express.json())
 
 app.use(require('./routes/auth'))
-// app.use(require('./routes/createpost'))
+app.use(require('./routes/createpost'))
 
 /* db connection  */
 mongoose.connect(mongoUrl)
@@ -25,19 +25,12 @@ mongoose.connect(mongoUrl)
   console.log(err);
 })
 
-app.get('/', (req, res) => {
-  res.json({
-    'name': "Jos Butler",
-    'age': '45'
-  })
-})
-
 
 
 
 /* server running on port 3000 */
-app.listen(3000, () => {
-  console.log('server is running on port 3000');
+app.listen(5000, () => {
+  console.log('server is running on port 5000');
 })
 
 

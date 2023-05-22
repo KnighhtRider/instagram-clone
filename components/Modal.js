@@ -1,9 +1,10 @@
-import { modalState } from '@/atoms/modalAtom'
+import { modalState, modalCaption, modalUrl } from '@/atoms/modalAtom'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { Dialog, Transition } from '@headlessui/react'
 import { CameraIcon } from '@heroicons/react/outline'
 import { Fragment, useRef, useState } from 'react'
+
 
 function Modal() {
 
@@ -11,9 +12,9 @@ function Modal() {
   const filePickerRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null)
 
-  const [caption, setCaption] = useState("")
+  const [caption, setCaption] = useRecoilState(modalCaption)
   const [image, setImage] = useState("")
-  const [url, setUrl] = useState("")
+  const [url, setUrl] = useRecoilState(modalUrl)
 
 
   /* Adding Image To Post Modal */
@@ -31,35 +32,35 @@ function Modal() {
 
   /* posting image to cloudinary */
   const postDetails = () => {
-    console.log(caption, image);
 
+    
     const data = new FormData();
 
     data.append("file", image)
-    data.append("upload_preset", "instagram-clone")
+    data.append("upload_preset", "insta-clone")
     data.append("cloud_name", "fantacloud")
 
-    fetch('https://api.cloudinary.com/v1_1/fantacloud/image/upload', {
+    fetch("https://api.cloudinary.com/v1_1/fantacloud/image/upload", {
       method: 'post',
-      caption:data
+      body:data
     }).then((res) => res.json())
-    .then(data => setUrl(data.url))
+    .then(data => {
+      setUrl(data.url)
+    })
     .catch((err) => console.log(err))
 
 
-    /* Saving Post to MongoDB */
-    fetch('http://localhost:5000/createpost', {
-      method : 'post',
+    fetch("http://localhost:5000", {
+      method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         caption,
-        pic:url
+        pic: url
       })
-    }).then((res) => res.json())
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err))
+    }).then(res=>res.json)
+    .catch(err => console.log(err))
 
   }
 
