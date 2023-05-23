@@ -10,10 +10,11 @@ const POST = mongoose.model('POST');
 
 router.get('/', requireLogin, (req, res) => {
   POST.find()
-  .populate('postedBy', '_id name')
+  .populate('postedBy', '_id name userName')
   .then((posts) => res.json(posts))
   .catch(err => console.log(err))
 })
+
 
 
 
@@ -24,6 +25,8 @@ router.post('/', requireLogin, (req, res) => {
   if(!caption || !pic) {
     return res.status(422).json({error: 'Please Add all the Fields'})
   }
+
+  //console.log(req.user)
 
   const post = new POST({
     caption,
@@ -36,11 +39,21 @@ router.post('/', requireLogin, (req, res) => {
     return res.json({post: result})
   }).catch((err) => console.log(err))
 
+
+
 })
 
 
-  
 
+  
+router.get('/myprofile', requireLogin, (req, res) => {
+  // console.log(req.user)
+  POST.find({postedBy:req.user._id})
+  .populate('postedBy', '_id name')
+  .then(myposts => {
+    res.json(myposts)
+  })
+})
 
 
 

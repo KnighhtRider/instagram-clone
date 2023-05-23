@@ -11,6 +11,9 @@ function Modal() {
   const [open, setOpen] = useRecoilState(modalState);
   const filePickerRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+
 
   const [caption, setCaption] = useState('')
   const [image, setImage] = useState("")
@@ -31,9 +34,12 @@ function Modal() {
 
 
   /* posting image to cloudinary */
-  const postDetails = () => {
+  const postDetails = async () => {
 
-    
+    if(loading) return;
+
+    setLoading(true);
+
     const data = new FormData();
 
     data.append("file", image)
@@ -49,8 +55,9 @@ function Modal() {
     })
     .catch((err) => console.log(err))
 
+      
 
-    fetch("http://localhost:5000", {
+      await fetch("http://localhost:5000", {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -62,6 +69,12 @@ function Modal() {
       })
     }).then(res=>res.json)
     .catch(err => console.log(err))
+
+
+
+    setOpen(false);
+    setLoading(false)
+    setSelectedFile(null)
 
   }
 
@@ -169,13 +182,14 @@ function Modal() {
                 <div className=' mt-5 sm:mt-6'>
                   <button
                     type='button'
+                    disabled={!selectedFile}
                     className=' inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4
               py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none
               focus:ring-2 focus:ring-offset-2 foucs:ring-red-500 sm:text-sm disabled:bg-gray-300
               disabled:cursor-not-allowed hover:disabled:bg-gray-300'
                   onClick={() => {postDetails()}}
                   >
-                    Upload Post
+                    {loading ? "Uploading...": "Upload Post"}
                   </button>
                 </div>
 

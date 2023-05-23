@@ -3,7 +3,9 @@ import Image from "next/image";
 import Instagram from "../assets/Instagram.jpeg";
 import vivek from '../assets/vivek.jpg'
 import logo from "../assets/logo.png";
-import Link from 'next/link';
+
+import { useRouter } from "next/navigation";
+
 import {
   SearchIcon,
   PlusCircleIcon,
@@ -21,6 +23,9 @@ import { modalState } from "@/atoms/modalAtom";
 
 
 function Header() {
+
+
+  const router = useRouter()
 
   const [open, setOpen] = useRecoilState(modalState);
 
@@ -79,6 +84,9 @@ function Header() {
           <Image src={vivek}
             alt='profile pic'
             className='w-10 h-10 rounded-full cursor-pointer'
+            onClick={() => {
+              router.push('/myprofile')
+            }}
           />
         </div>
 

@@ -16,6 +16,7 @@ app.use(express.json())
 app.use(require('./routes/auth'))
 app.use(require('./routes/createpost'))
 
+
 /* db connection  */
 mongoose.connect(mongoUrl)
 .then(() => {

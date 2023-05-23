@@ -45,7 +45,7 @@ function Login() {
         notifyA(data.error)
       } else {
         notifyB(data.message);
-        console.log(data);
+        // console.log(data);
         localStorage.setItem('jwt', data)
         router.push('/')
       }
@@ -115,8 +115,12 @@ function Login() {
           </a>
         </div>
         <div class="bg-white border border-gray-300 text-center w-80 py-4">
-          <span class="text-sm">Don't have an account?</span>
-          <a class="text-blue-500 text-sm font-semibold">Sign up</a>
+          <span class="text-sm"
+            
+          >Don't have an account?</span>
+          <a class="text-blue-500 text-sm font-semibold cursor-pointer ml-2 hover:text-blue-700"
+            onClick={() => router.push('/signup')}
+          >Sign up</a>
         </div>
         <div class="mt-3 text-center">
           <span class="text-xs">Get the app</span>

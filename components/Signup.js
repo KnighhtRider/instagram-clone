@@ -135,7 +135,9 @@ function Signup() {
         </div>
         <div class="bg-white border border-gray-300 text-center w-80 py-4">
           <span class="text-sm">Have an account?</span>
-          <a class="text-blue-500 text-sm font-semibold"> Log in</a>
+          <a class="text-blue-500 text-sm font-semibold hover:text-blue-700 cursor-pointer"
+            onClick={() => router.push('/login')}
+          > Log in</a>
         </div>
         <div class="mt-3 text-center">
           <span class="text-xs">Get the app</span>
