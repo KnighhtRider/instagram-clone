@@ -44,9 +44,10 @@ function Login() {
       if(data.error) {
         notifyA(data.error)
       } else {
-        notifyB(data.message);
+        notifyB("Logged in Successfully");
         // console.log(data);
-        localStorage.setItem('jwt', data)
+        localStorage.setItem('jwt', data.token)
+        localStorage.setItem('user', JSON.stringify(data.user))
         router.push('/')
       }
       console.log(data)

@@ -5,7 +5,7 @@ const requireLogin = require('../middlewares/requireLogin');
 
 
 const POST = mongoose.model('POST');
-
+const USER = mongoose.model('USER')
 
 
 router.get('/', requireLogin, (req, res) => {
@@ -13,8 +13,18 @@ router.get('/', requireLogin, (req, res) => {
   .populate('postedBy', '_id name userName')
   .then((posts) => res.json(posts))
   .catch(err => console.log(err))
+  
+
 })
 
+
+// router.get('/miniprofile', requireLogin, (req, res) => {
+//   USER.find(req.user)
+//   .then((posts) => res.json(posts))
+//   .catch(err => console.log(err))
+  
+
+// })
 
 
 
@@ -47,7 +57,7 @@ router.post('/', requireLogin, (req, res) => {
 
   
 router.get('/myprofile', requireLogin, (req, res) => {
-  // console.log(req.user)
+  console.log(req.user)
   POST.find({postedBy:req.user._id})
   .populate('postedBy', '_id name')
   .then(myposts => {
@@ -55,6 +65,26 @@ router.get('/myprofile', requireLogin, (req, res) => {
   })
 })
 
+
+router.put('/like', requireLogin, (req, res) => {
+  
+  POST.findByIdAndUpdate(req.body.postId, {
+    $push: {likes: req.user._id} 
+  }, {
+    new:true
+  }).then((result) => res.json(result))
+  .catch((err) => console.log(err))
+})
+
+router.put('/unlike', requireLogin, (req, res) => {
+  
+  POST.findByIdAndUpdate(req.body.postId, {
+    $pull: {likes: req.user._id} 
+  }, {
+    new:true
+  }).then((result) => res.json(result))
+  .catch((err) => console.log(err))
+})
 
 
 module.exports = router

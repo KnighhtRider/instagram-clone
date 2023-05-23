@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
-import vivek from '../assets/vivek.jpg'
+import default_profile from '../assets/default_profile.webp'
 import Image from "next/image";
 
 function MyProfile() {
 
 
   const [posts, setPosts] = useState([])
+  const [user, setUser] = useState('')
+  
+  useEffect(() => {
+    // Perform localStorage action
+    setUser(JSON.parse(localStorage.getItem('user')))
+    
+  }, [])
 
   useEffect(() => {
 
@@ -37,7 +44,7 @@ function MyProfile() {
           <header className="flex flex-wrap items-center p-4 md:py-8">
             <div className="md:w-3/12 md:ml-16">
               {/* <!-- profile image --> */}
-              <Image src={vivek} alt='profile' className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
+              <Image src={default_profile} alt='profile' className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
                      border-2 border-pink-600 p-1" />
             </div>
 
@@ -45,7 +52,7 @@ function MyProfile() {
             <div className="w-8/12 md:w-7/12 ml-4">
               <div className="md:flex md:flex-wrap md:items-center mb-4">
                 <h2 className="text-3xl inline-block font-light md:mr-2 mb-2 sm:mb-0">
-                  mrtravlerrr_
+                  {user.userName}
                 </h2>
 
                 {/* <!-- badge --> */}
@@ -63,16 +70,16 @@ function MyProfile() {
 
               {/* <!-- post, following, followers list for medium screens --> */}
               <ul className="hidden md:flex space-x-8 mb-4">
-                <li>
+                <li key='01'>
                   <span className="font-semibold">136</span>
                   posts
                 </li>
 
-                <li>
+                <li key='01'>
                   <span className="font-semibold">40.5k</span>
                   followers
                 </li>
-                <li>
+                <li key='01'>
                   <span className="font-semibold">302</span>
                   following
                 </li>
@@ -80,9 +87,9 @@ function MyProfile() {
 
               {/* <!-- user meta form medium screens --> */}
               <div className="hidden md:block">
-                <h1 className="font-semibold">Mr Travlerrr...</h1>
-                <span>Travel, Nature and Music</span>
-                <p>Lorem ipsum dolor sit amet consectetur</p>
+                <h1 className="font-semibold">{user.name}</h1>
+                <span>Travel, Nature and Music.</span>
+                <p>(Jamian)</p>
               </div>
 
             </div>
@@ -103,16 +110,16 @@ function MyProfile() {
             {/* <!-- user following for mobile only --> */}
             <ul className="flex md:hidden justify-around space-x-8 border-t 
                   text-center p-2 text-gray-600 leading-snug text-sm">
-              <li>
+              <li key='01'>
                 <span className="font-semibold text-gray-800 block">136</span>
                 posts
               </li>
 
-              <li>
+              <li key='01'>
                 <span className="font-semibold text-gray-800 block">40.5k</span>
                 followers
               </li>
-              <li>
+              <li key='01'>
                 <span className="font-semibold text-gray-800 block">302</span>
                 following
               </li>
@@ -123,7 +130,7 @@ function MyProfile() {
                       uppercase tracking-widest font-semibold text-xs text-gray-600
                       border-t">
               {/* <!-- posts tab is active --> */}
-              <li className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700">
+              <li key='01' className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700">
                 <a className="inline-block p-3" href="#">
                   <i className="fas fa-th-large text-xl md:text-xs"></i>
                   <span className="hidden md:inline">post</span>

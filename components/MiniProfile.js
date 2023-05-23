@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import default_profile from '../assets/default_profile.webp'
 import { useRouter } from 'next/navigation'
@@ -7,8 +7,17 @@ import { useRouter } from 'next/navigation'
 function MiniProfile() {
 
   const router = useRouter();
- 
 
+  const [user, setUser] = useState('')
+  
+  useEffect(() => {
+    // Perform localStorage action
+    setUser(JSON.parse(localStorage.getItem('user')))
+    
+  }, [])
+
+
+  
 
   return (
     <div className='flex items-center justify-between mt-14 ml-10'>
@@ -18,8 +27,8 @@ function MiniProfile() {
       />
 
       <div className='flex-1 mx-4'>
-        <h2 className='font-bold'>vivek_thakur012</h2>
-        <h3 className='text-sm text-gray-400'>VIVEK THAKUR</h3>
+        <h2 className='font-bold'>{user.name}</h2>
+        <h3 className='text-sm text-gray-400'>{user.userName}</h3>
       </div>
 
       <button 
