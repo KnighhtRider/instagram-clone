@@ -1,4 +1,4 @@
-import { modalState, modalCaption, modalUrl } from '@/atoms/modalAtom'
+import { modalState } from '@/atoms/modalAtom'
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { Dialog, Transition } from '@headlessui/react'

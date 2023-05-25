@@ -2,36 +2,77 @@ import React, { useState, useEffect } from 'react'
 import Header from './Header'
 import default_profile from '../assets/default_profile.webp'
 import Image from "next/image";
+import { useRouter } from 'next/router';
 
-function MyProfile() {
+function UserProfile() {
 
-
-  const [posts, setPosts] = useState([])
+  const router = useRouter();
+  const userid = router.query.userid
+  // console.log(userid);
   const [user, setUser] = useState('')
-  
-  useEffect(() => {
-    // Perform localStorage action
-    setUser(JSON.parse(localStorage.getItem('user')))
-    
-  }, [])
+  const [posts, setPosts] = useState([])
 
-  useEffect(() => {
+  const [isFollow, setIsFollow] = useState(false)
 
 
-    /* Fetch all posts */
-    fetch('http://localhost:5000/myprofile', {
+  /* To Follow User */
+  const followUser = (userId) => {
+    fetch('http://localhost:5000/follow', {
+      method: 'put',
       headers: {
-        'Authorization': "Bearer " + localStorage.getItem("jwt")
-      }
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        followId: userId 
+      })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      setIsFollow(true)
+    })
+  }
+
+  /* To Unfollow User */
+  const unfollowUser = (userId) => {
+    fetch('http://localhost:5000/unfollow', {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        followId: userId 
+      })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      setIsFollow(false)
+    })
+  }
+
+
+  /* Fetch user and its posts */
+  useEffect(() => {
+    fetch(`http://localhost:5000/user/${userid}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
     })
       .then((res) => res.json())
       .then((result) => {
-        setPosts(result)
-      })
-      .catch(err => console.log(err))
-
-
-  }, [])
+        // console.log(result);
+        setUser(result.user);
+        setPosts(result.posts);
+        if(result.user.followers.includes(
+          JSON.parse(localStorage.getItem('user'))._id
+        )) {
+          setIsFollow(true)
+        }
+      });
+  }, [isFollow]);
 
 
   return (
@@ -52,7 +93,7 @@ function MyProfile() {
             <div className="w-8/12 md:w-7/12 ml-4">
               <div className="md:flex md:flex-wrap md:items-center mb-4">
                 <h2 className="text-3xl inline-block font-light md:mr-2 mb-2 sm:mb-0">
-                  {user.userName}
+                  {user.name}
                 </h2>
 
                 {/* <!-- badge --> */}
@@ -63,24 +104,34 @@ function MyProfile() {
                 </span>
 
                 {/* <!-- follow button --> */}
-                <a href="#" className="bg-blue-500 px-2 py-1 
-                        text-white font-semibold text-sm rounded block text-center 
-                        sm:inline-block">Follow</a>
+                <button 
+                  className="bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded block text-center sm:inline-block hover:bg-blue-400"
+                  onClick={() => {
+                    if(isFollow) {
+                      unfollowUser(user._id)
+                    } else {
+                      followUser(user._id)
+                    }
+                    
+                  }}  
+                >
+                  {isFollow ? 'Unfollow': 'Follow'}
+                </button>
               </div>
 
               {/* <!-- post, following, followers list for medium screens --> */}
               <ul className="hidden md:flex space-x-8 mb-4">
-                <li key='10'>
+                <li key='08'>
                   <span className="font-semibold">{posts.length} </span>
-                  posts
+                   posts
                 </li>
 
-                <li key='12'>
-                  <span className="font-semibold">40.5k</span>
+                <li key='09'>
+                  <span className="font-semibold">{user.followers ? user.followers.length : '0'} </span>
                   followers
                 </li>
-                <li key='13'>
-                  <span className="font-semibold">302</span>
+                <li key='10'>
+                  <span className="font-semibold">{user.following ? user.following.length : '0'} </span>
                   following
                 </li>
               </ul>
@@ -110,17 +161,17 @@ function MyProfile() {
             {/* <!-- user following for mobile only --> */}
             <ul className="flex md:hidden justify-around space-x-8 border-t 
                   text-center p-2 text-gray-600 leading-snug text-sm">
-              <li key='14'>
-                <span className="font-semibold text-gray-800 block">{posts.length}</span>
-                posts
+              <li key='11'>
+                <span className="font-semibold text-gray-800 block">{posts.length} </span>
+                 posts
               </li>
 
-              <li key='15'>
-                <span className="font-semibold text-gray-800 block">40.5k</span>
+              <li key='12'>
+                <span className="font-semibold text-gray-800 block">{user.followers ? user.followers.length : '0'} </span>
                 followers
               </li>
-              <li key='16'>
-                <span className="font-semibold text-gray-800 block">302</span>
+              <li key='13'>
+                <span className="font-semibold text-gray-800 block">{user.followers ? user.following.length : '0'} </span>
                 following
               </li>
             </ul>
@@ -130,7 +181,7 @@ function MyProfile() {
                       uppercase tracking-widest font-semibold text-xs text-gray-600
                       border-t">
               {/* <!-- posts tab is active --> */}
-              <li key='07' className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700">
+              <li key='17' className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700">
                 <a className="inline-block p-3" href="#">
                   <i className="fas fa-th-large text-xl md:text-xs"></i>
                   <span className="hidden md:inline">post</span>
@@ -185,4 +236,4 @@ function MyProfile() {
   )
 }
 
-export default MyProfile
+export default UserProfile;

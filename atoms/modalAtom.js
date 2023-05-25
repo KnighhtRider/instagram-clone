@@ -19,10 +19,15 @@ const modalUrl = atom({
   default: '',
 })
 
+const commentState = atom({
+  key: 'state',
+  default: false,
+})
 
 export {
   modalState,
   modalCaption,
-  modalUrl
+  modalUrl,
+  commentState,
 
 }

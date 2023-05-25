@@ -15,6 +15,7 @@ app.use(express.json())
 
 app.use(require('./routes/auth'))
 app.use(require('./routes/createpost'))
+app.use(require('./routes/user'))
 
 
 /* db connection  */

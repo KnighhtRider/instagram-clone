@@ -4,6 +4,7 @@ import Feed from "@/components/Feed"
 import Modal from "@/components/Modal"
 
 
+
 export default function Home() {
   return (
     <div className= 'h-screen overflow-y-scroll scrollbar-hide'>
@@ -17,9 +18,8 @@ export default function Home() {
       <Feed />
       
       <Modal />
-
             
-      
+
     </div>
   )
 }

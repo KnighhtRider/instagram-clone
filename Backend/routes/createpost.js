@@ -72,7 +72,9 @@ router.put('/like', requireLogin, (req, res) => {
     $push: {likes: req.user._id} 
   }, {
     new:true
-  }).then((result) => res.json(result))
+  })
+  .populate('postedBy', '_id userName')
+  .then((result) => res.json(result))
   .catch((err) => console.log(err))
 })
 
@@ -82,9 +84,29 @@ router.put('/unlike', requireLogin, (req, res) => {
     $pull: {likes: req.user._id} 
   }, {
     new:true
-  }).then((result) => res.json(result))
+  })
+  .populate('postedBy', '_id userName')
+  .then((result) => res.json(result))
   .catch((err) => console.log(err))
 })
+
+
+router.put('/comment', requireLogin, (req, res) => {
+  const comment = {
+    comment: req.body.text,
+    postedBy: req.user._id
+  }
+  POST.findByIdAndUpdate(req.body.postId, {
+    $push: {comments:comment}
+  }, {
+    new: true
+  })
+  .populate('comments.postedBy', '_id name')
+  .then((result) => res.json(result))
+  .catch((err) => console.log(err))
+})
+
+
 
 
 module.exports = router
