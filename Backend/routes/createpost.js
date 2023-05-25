@@ -8,9 +8,10 @@ const POST = mongoose.model('POST');
 const USER = mongoose.model('USER')
 
 
-router.get('/', requireLogin, (req, res) => {
+router.get('/createpost', requireLogin, (req, res) => {
   POST.find()
-  .populate('postedBy', '_id name userName')
+  .populate('postedBy', '_id name userName Photo')
+  .sort('-createdAt')
   .then((posts) => res.json(posts))
   .catch(err => console.log(err))
   
@@ -28,7 +29,7 @@ router.get('/', requireLogin, (req, res) => {
 
 
 
-router.post('/', requireLogin, (req, res) => {
+router.post('/createpost', requireLogin, (req, res) => {
   // console.log(req.body)
   const {caption, pic} = req.body;
   console.log(pic);
@@ -60,6 +61,7 @@ router.get('/myprofile', requireLogin, (req, res) => {
   console.log(req.user)
   POST.find({postedBy:req.user._id})
   .populate('postedBy', '_id name')
+  .sort('-createdAt')
   .then(myposts => {
     res.json(myposts)
   })
@@ -73,7 +75,7 @@ router.put('/like', requireLogin, (req, res) => {
   }, {
     new:true
   })
-  .populate('postedBy', '_id userName')
+  .populate('postedBy', '_id userName Photo')
   .then((result) => res.json(result))
   .catch((err) => console.log(err))
 })
@@ -85,7 +87,7 @@ router.put('/unlike', requireLogin, (req, res) => {
   }, {
     new:true
   })
-  .populate('postedBy', '_id userName')
+  .populate('postedBy', '_id userName Photo')
   .then((result) => res.json(result))
   .catch((err) => console.log(err))
 })

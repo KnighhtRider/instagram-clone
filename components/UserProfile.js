@@ -29,7 +29,7 @@ function UserProfile() {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
+      // console.log(data)
       setIsFollow(true)
     })
   }
@@ -85,7 +85,7 @@ function UserProfile() {
           <header className="flex flex-wrap items-center p-4 md:py-8">
             <div className="md:w-3/12 md:ml-16">
               {/* <!-- profile image --> */}
-              <Image src={default_profile} alt='profile' className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
+              <Image src={user.Photo? user.Photo : default_profile} alt='profile' className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
                      border-2 border-pink-600 p-1" />
             </div>
 

@@ -9,9 +9,14 @@ import {
 } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import Comments from './Comments';
+import Image from "next/image";
+// import default_profile from '../assets/default_profile.webp'
 import Link from 'next/link';
 
 function Posts() {
+
+  const default_profile = 'https://cdn-icons-png.flaticon.com/128/3177/3177440.png'
+
   const [posts, postsData] = useState([]);
   const [user, setUser] = useState("");
   const [comment, setComment] = useState("");
@@ -24,7 +29,7 @@ function Posts() {
 
   useEffect(() => {
     /* Fetch all posts */
-    fetch("http://localhost:5000", {
+    fetch("http://localhost:5000/createpost", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -116,9 +121,9 @@ function Posts() {
       {posts.map((post) => (
         <div className="flex flex-col bg-white mx-0.5 my-1 rounded-sm lg:px-16 pt-4 min-h-max">
           {/* Header */}
-          <div className="flex items-center p-2 flow-root">
+          <div className=" items-center p-2 flow-root">
             <img
-              src={post.photo}
+              src={post.postedBy.Photo ? post.postedBy.Photo : default_profile}
               className="rounded-full h-12 w-12 object-contain border p-1 mr-3 float-left"
               alt="User Image"
             />

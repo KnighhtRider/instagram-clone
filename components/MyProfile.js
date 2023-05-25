@@ -2,31 +2,35 @@ import React, { useState, useEffect } from 'react'
 import Header from './Header'
 import default_profile from '../assets/default_profile.webp'
 import Image from "next/image";
+import ProfilePic from './ProfilePic';
 
 function MyProfile() {
 
 
   const [posts, setPosts] = useState([])
   const [user, setUser] = useState('')
+  const [changePic, setChangePic] = useState(false)
   
-  useEffect(() => {
-    // Perform localStorage action
-    setUser(JSON.parse(localStorage.getItem('user')))
+  // useEffect(() => {
+  //   // Perform localStorage action
+  //   setUser(JSON.parse(localStorage.getItem('user')))
     
-  }, [])
+  // }, [])
 
   useEffect(() => {
 
 
     /* Fetch all posts */
-    fetch('http://localhost:5000/myprofile', {
+    fetch(`http://localhost:5000/user/${JSON.parse(localStorage.getItem('user'))._id}`, {
       headers: {
         'Authorization': "Bearer " + localStorage.getItem("jwt")
       }
     })
       .then((res) => res.json())
       .then((result) => {
-        setPosts(result)
+        console.log(result)
+        setPosts(result.posts)
+        setUser(result.user)
       })
       .catch(err => console.log(err))
 
@@ -34,18 +38,33 @@ function MyProfile() {
   }, [])
 
 
+  /* To Change Profile Pic */
+  const changeProfile = () => {
+    if(changePic) {
+      setChangePic(false)
+    } else {
+      setChangePic(true)
+    }
+  }
+
+
   return (
     <div>
 
       <Header />
 
-      <main className="bg-gray-100 bg-opacity-25">
+      <main className="bg-gray-100 bg-opacity-25 relative">
         <div className="lg:w-8/12 lg:mx-auto mb-8">
           <header className="flex flex-wrap items-center p-4 md:py-8">
             <div className="md:w-3/12 md:ml-16">
               {/* <!-- profile image --> */}
-              <Image src={default_profile} alt='profile' className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
-                     border-2 border-pink-600 p-1" />
+              <img 
+                src={user.Photo? user.Photo : default_profile} 
+                alt='profile' 
+                className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full border-2 border-pink-600 p-1 cursor-pointer" 
+                onClick={changeProfile}
+                />
+                
             </div>
 
             {/* <!-- profile meta --> */}
@@ -71,16 +90,16 @@ function MyProfile() {
               {/* <!-- post, following, followers list for medium screens --> */}
               <ul className="hidden md:flex space-x-8 mb-4">
                 <li key='10'>
-                  <span className="font-semibold">{posts.length} </span>
+                  <span className="font-semibold">{ posts ? posts.length : '0'} </span>
                   posts
                 </li>
 
                 <li key='12'>
-                  <span className="font-semibold">40.5k</span>
+                  <span className="font-semibold">{user.followers ? user.followers.length : '0'} </span>
                   followers
                 </li>
                 <li key='13'>
-                  <span className="font-semibold">302</span>
+                  <span className="font-semibold">{user.following ? user.following.length : '0'} </span>
                   following
                 </li>
               </ul>
@@ -116,11 +135,11 @@ function MyProfile() {
               </li>
 
               <li key='15'>
-                <span className="font-semibold text-gray-800 block">40.5k</span>
+                <span className="font-semibold text-gray-800 block">{user.followers ? user.followers.length : '0'} </span>
                 followers
               </li>
               <li key='16'>
-                <span className="font-semibold text-gray-800 block">302</span>
+                <span className="font-semibold text-gray-800 block">{user.following ? user.following.length : '0'} </span>
                 following
               </li>
             </ul>
@@ -175,12 +194,18 @@ function MyProfile() {
                   )
                 })
               }
-
-
             </div>
+            
           </div>
         </div>
+        
       </main>
+
+      {
+        changePic &&
+        <ProfilePic changeProfile={changeProfile}/>
+      }
+      
     </div>
   )
 }

@@ -1,5 +1,6 @@
 const { query } = require('express');
 const express = require('express');
+const { json } = require('express/lib/response');
 const router = express.Router();
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
@@ -64,7 +65,15 @@ router.put("/unfollow", requireLogin, (req, res) => {
 })
 
 
-
+/* To Upload Profile Pic */
+router.put('/uploadProfilePic', requireLogin, (req, res) => {
+  USER.findByIdAndUpdate(req.user._id, {
+    $set: {Photo:req.body.pic}
+  }, {
+    new: true
+  }).then((result) => res.json(result))
+  .catch((err) => res.status(422).json({error: err}))
+})
 
 
 module.exports = router;

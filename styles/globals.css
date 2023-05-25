@@ -43,6 +43,29 @@
     background-image: url(https://bit.ly/3v2LT17);
   }
 
+  .darkBg {
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
+
+  .centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .changePic {
+    background: #fff;
+    border-radius: 10px;
+  }
+
   .pb-full {
     padding-bottom: 100%;
   }

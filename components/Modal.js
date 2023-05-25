@@ -34,7 +34,7 @@ function Modal() {
 
 
   /* posting image to cloudinary */
-  const postDetails = async () => {
+  const postDetails =  () => {
 
     if(loading) return;
 
@@ -57,7 +57,7 @@ function Modal() {
 
       
 
-      await fetch("http://localhost:5000", {
+      fetch("http://localhost:5000/createpost", {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
