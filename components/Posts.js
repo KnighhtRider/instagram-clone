@@ -8,19 +8,20 @@ import {
   PaperAirplaneIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
-import Comments from './Comments';
-import Image from "next/image";
+import Comments from "./Comments";
+import { GrClose } from "react-icons/gr";
 // import default_profile from '../assets/default_profile.webp'
-import Link from 'next/link';
+import Link from "next/link";
 
 function Posts() {
-
-  const default_profile = 'https://cdn-icons-png.flaticon.com/128/3177/3177440.png'
+  const default_profile =
+    "https://cdn-icons-png.flaticon.com/128/3177/3177440.png";
 
   const [posts, postsData] = useState([]);
   const [user, setUser] = useState("");
   const [comment, setComment] = useState("");
-  // const [items, setItems] = useState([])
+  const [show, setShow] = useState(false);
+  const [item, setItem] = useState([]);
 
   useEffect(() => {
     // Perform localStorage action
@@ -38,6 +39,17 @@ function Posts() {
       .then((result) => postsData(result))
       .catch((err) => console.log(err));
   }, []);
+
+  /* To show and hide comments */
+  const toggleComment = (post) => {
+    if (show) {
+      setShow(false);
+    } else {
+      setShow(true);
+      setItem(post);
+      console.log(item.comments);
+    }
+  };
 
   const likePost = (id) => {
     fetch("http://localhost:5000/like", {
@@ -111,15 +123,15 @@ function Posts() {
             return post;
           }
         });
-        postsData(newData);
         console.log(result);
+        setComment('')
       });
   };
 
   return (
     <div>
       {posts.map((post) => (
-        <div className="flex flex-col bg-white mx-0.5 my-1 rounded-sm lg:px-16 pt-4 min-h-max">
+        <div className="flex flex-col bg-white mx-0.5 my-1 rounded-sm lg:px-16 pt-4 min-h-max relative">
           {/* Header */}
           <div className=" items-center p-2 flow-root">
             <img
@@ -128,9 +140,9 @@ function Posts() {
               alt="User Image"
             />
             <Link href={`/profile/${post.postedBy._id}`}>
-            <p className="font-bold cursor-pointer mt-2">
-              {post.postedBy.userName}
-            </p>
+              <p className="font-bold cursor-pointer mt-2">
+                {post.postedBy.userName}
+              </p>
             </Link>
             <DotsHorizontalIcon className="h-5 float-right cursor-pointer " />
           </div>
@@ -181,11 +193,11 @@ function Posts() {
             <span className="font-bold mr-1">{post.postedBy.userName}</span>
             {post.caption}
           </p>
-          
-          <div className="px-3 border-none flex-1 focus:ring-0 outline-none cursor-pointer"
-          
-          >
-            <p className=" text-gray-600">View all 10 comments</p>
+
+          <div className="px-3 border-none flex-1 focus:ring-0 outline-none cursor-pointer">
+            <p className=" text-gray-600" onClick={() => toggleComment(post)}>
+              View all {post.comments.length} comments
+            </p>
           </div>
 
           {/* comments */}
@@ -213,6 +225,76 @@ function Posts() {
       ))}
 
       {/* show comments Section */}
+
+      {show && (
+        <div className="show-comment z-10">
+          <div className="comment-container">
+            <div className="post-pic">
+              <img src={item.photo} className="w-[700px] h-full" />
+            </div>
+            <div className="details">
+              {/* post Header */}
+              <div className="card-header border-b-gray-300 border">
+                <div className="card-pic">
+                  <img
+                    src={default_profile}
+                    className="rounded-full h-12 w-12 object-contain border p-1 mr-3 float-left"
+                    alt="User Image"
+                  />
+                </div>
+                <h5 className="font-bold cursor-pointer mt-2">{item.postedBy.userName}</h5>
+              </div>
+
+              {/* comment Section */}
+              <div className="comment-section border-b-gray-300 border">
+                {item.comments.map((comment) => {
+                  return (<p className="comment">
+                   <span className="commenter px-1 font-bold mr-1">
+                     {comment.postedBy.name} {" "}
+                   </span>
+                   <span className="comment-text">{comment.comment}</span>
+                 </p>)
+                })}
+               
+              </div>
+
+              {/* post content */}
+              <div className="post-content">
+                <p className="justify-between px-3 pt-3">{item.likes.length} Likes</p>
+                <p className=" px-3 mr-1 block">{item.caption}</p>
+              </div>
+
+              {/* Add Comment */}
+              <div className="flex items-center px-3">
+                <EmojiHappyIcon className="h-7 flex" />
+                <input
+                  type="text"
+                  placeholder="Add a comment..."
+                  className="border-none flex-1 focus:ring-0 outline-none bg-gray-50"
+                  value={comment}
+                  onChange={(e) => {
+                    setComment(e.target.value);
+                  }}
+                />
+                <button className="font-semibold text-blue-400 hover:text-blue-600"
+                  onClick={() => {
+                    makeComment(comment, item._id);
+                    toggleComment();
+                  }}
+                >
+                  Post
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            className="close-comment cursor-pointer"
+            onClick={() => toggleComment()}
+          >
+            <GrClose className="w-10 h-10 font-bold cursor-pointer" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

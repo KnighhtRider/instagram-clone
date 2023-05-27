@@ -75,6 +75,58 @@
     display: none;
   }
 
+
+  /* For comment Section */
+  .show-comment {
+    width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(16, 13, 13, 0.4);
+  }
+
+  .comment-container {
+    display: flex;
+    width: 70%;
+    background-color: white;
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    height: 400px;
+  }
+
+  .post-pic {
+    background-color: black;
+    display: flex;
+    align-items: center;
+  }
+
+  .post-pic img {
+    object-fit: contain;
+    /* width: 100%; */
+  }
+
+  .details {
+    width: 100%;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .comment-section {
+    flex-grow: 4;
+    text-align: left
+  }
+
+  .close-comment {
+    position: fixed;
+    top: 18%;
+    right: 16%;
+
+  }
+
+
   @media screen and (min-width: 768px) {
     .post:hover .overlay {
       display: block;

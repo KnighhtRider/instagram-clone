@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
-import default_profile from '../assets/default_profile.webp'
+// import default_profile from '../assets/default_profile.webp'
 import Image from "next/image";
 import { useRouter } from 'next/router';
 
 function UserProfile() {
+
+  const default_profile = 'https://cdn-icons-png.flaticon.com/128/3177/3177440.png'
 
   const router = useRouter();
   const userid = router.query.userid
@@ -85,7 +87,7 @@ function UserProfile() {
           <header className="flex flex-wrap items-center p-4 md:py-8">
             <div className="md:w-3/12 md:ml-16">
               {/* <!-- profile image --> */}
-              <Image src={user.Photo? user.Photo : default_profile} alt='profile' className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
+              <img src={user.Photo? user.Photo : default_profile} alt='profile' className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
                      border-2 border-pink-600 p-1" />
             </div>
 

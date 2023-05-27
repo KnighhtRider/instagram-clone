@@ -14,7 +14,7 @@ import {
   PaperAirplaneIcon,
   MenuIcon,
 } from "@heroicons/react/outline";
-import {HomeIcon} from "@heroicons/react/solid";
+import { HomeIcon } from "@heroicons/react/solid";
 
 
 import Login from "./Login";
@@ -32,13 +32,18 @@ function Header() {
   return (
     <div className='shadow-sm border-b bg-white sticky top-0 z-50'>
       <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
+
         {/* Left */}
         <div className="relative hidden lg:inline-grid w-28 cursor-pointer mt-4">
-          <Image src={Instagram} alt="cam-Talk" objectFit="contain" />
+          <Image src={Instagram} alt="cam-Talk" objectFit="contain"
+            onClick={() => { router.push('/') }}
+          />
         </div>
 
         <div className="relative lg:hidden w-10 flex-shrink-0 cursor-pointer mt-4">
-          <Image src={logo} alt="cam-Talk" objectFit="contain" />
+          <Image src={logo} alt="cam-Talk" objectFit="contain"
+            onClick={() => router.push('/')}
+          />
         </div>
 
         {/* Middle - Search input field */}
@@ -55,33 +60,53 @@ function Header() {
           </div>
         </div>
 
-        {/* Right */}
+        {/* Right Section for lg screen */}
         <div className='flex items-center justify-end space-x-4'>
-          <HomeIcon 
-            className='navBtn cursor-pointer' 
-            onClick={() => {router.push('/')}}
+          <HomeIcon
+            className='navBtn cursor-pointer'
+            onClick={() => { router.push('/') }}
           />
-          <MenuIcon className='h-6 md:hidden cursor-pointer' />
-          
-          <div className='relative navBtn'>
-            <PaperAirplaneIcon className='navBtn rotate-45' />
+
+
+          <div className='relative h-6 md:hidden cursor-pointer hover:scale-125 transition-all duration-150 ease-out'>
+            <HeartIcon className='h-6 md:hidden cursor-pointer hover:scale-125 transition-all duration-150 ease-out' />
+            <div className='absolute top-1 -right-0 text-xs w-2 h-2 bg-red-500 rounded-full flex items-center justify-center text-white'></div>
+          </div>
+
+
+
+          {/* message icon for small screen */}
+          <div className='relative h-6 md:hidden cursor-pointer hover:scale-125 transition-all duration-150 ease-out'>
+            <PaperAirplaneIcon className='h-6 md:hidden cursor-pointer hover:scale-125 transition-all duration-150 ease-out rotate-45' />
             <div className='absolute -top-1 -right-2 text-xs w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-bounce text-white'>3</div>
           </div>
-          
-          
-          <PlusCircleIcon 
-            onClick={() => setOpen(true)} 
-            className='navBtn' 
-            
+
+
+          {/* <MenuIcon className='h-6 md:hidden cursor-pointer' /> */}
+
+          <div className='relative navBtn'>
+            <PaperAirplaneIcon className='navBtn rotate-45 ' />
+            <div className='absolute -top-1 -right-2 text-xs w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-bounce text-white'>3</div>
+          </div>
+
+
+
+
+          <PlusCircleIcon
+            onClick={() => setOpen(true)}
+            className='navBtn'
+
           />
-          
+
 
 
           <UserGroupIcon className='navBtn' />
 
+
+
           <div className='relative navBtn'>
-          <HeartIcon className='navBtn' />
-          <div className='absolute -right-0 text-xs w-2 h-2 bg-red-500 rounded-full flex items-center justify-center text-white'></div>
+            <HeartIcon className='navBtn' />
+            <div className='absolute -right-0 text-xs w-2 h-2 bg-red-500 rounded-full flex items-center justify-center text-white'></div>
           </div>
 
           <Image src={vivek}

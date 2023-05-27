@@ -86,7 +86,12 @@ function ProfilePic({ changeProfile }) {
           />
         </div>
         <div>
-          <button className='font-bold text-red-500 border-gray border-t-2 mt-3 w-full'>Remove Current Photo</button>
+          <button className='font-bold text-red-500 border-gray border-t-2 mt-3 w-full'
+            onClick={() => {
+              setUrl(null)
+              postPic()
+            }}
+          >Remove Current Photo</button>
         </div>
         <div>
           <button className='text-black-400 border-gray border-t-2 mt-3 w-full'

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
-import default_profile from '../assets/default_profile.webp'
+// import default_profile from '../assets/default_profile.webp'
 import Image from "next/image";
 import ProfilePic from './ProfilePic';
 
 function MyProfile() {
 
+  const default_profile = 'https://cdn-icons-png.flaticon.com/128/3177/3177440.png'
 
   const [posts, setPosts] = useState([])
   const [user, setUser] = useState('')
