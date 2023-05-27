@@ -62,6 +62,7 @@ function ProfilePic({ changeProfile }) {
 
 
   useEffect(() => {
+    
     if(url) {
       postPic()
     }

@@ -18,15 +18,9 @@ function Posts() {
     "https://cdn-icons-png.flaticon.com/128/3177/3177440.png";
 
   const [posts, postsData] = useState([]);
-  const [user, setUser] = useState("");
   const [comment, setComment] = useState("");
   const [show, setShow] = useState(false);
   const [item, setItem] = useState([]);
-
-  useEffect(() => {
-    // Perform localStorage action
-    setUser(JSON.parse(localStorage.getItem("user")));
-  }, []);
 
   useEffect(() => {
     /* Fetch all posts */
@@ -123,15 +117,16 @@ function Posts() {
             return post;
           }
         });
+        postsData(newData);
+        setComment("");
         console.log(result);
-        setComment('')
       });
   };
 
   return (
     <div>
       {posts.map((post) => (
-        <div className="flex flex-col bg-white mx-0.5 my-1 rounded-sm lg:px-16 pt-4 min-h-max relative">
+        <div className="flex flex-col bg-white mx-0.5 my-1 rounded-sm lg:px-16 pt-4 min-h-max">
           {/* Header */}
           <div className=" items-center p-2 flow-root">
             <img
@@ -237,30 +232,45 @@ function Posts() {
               <div className="card-header border-b-gray-300 border">
                 <div className="card-pic">
                   <img
-                    src={default_profile}
+                    src={item.postedBy.Photo ? item.postedBy.Photo : default_profile}
                     className="rounded-full h-12 w-12 object-contain border p-1 mr-3 float-left"
                     alt="User Image"
                   />
                 </div>
-                <h5 className="font-bold cursor-pointer mt-2">{item.postedBy.userName}</h5>
+                <h5 className="font-bold cursor-pointer mt-2">
+                  {item.postedBy.userName}
+                </h5>
               </div>
 
               {/* comment Section */}
-              <div className="comment-section border-b-gray-300 border">
+              <div className="comment-section border-b-gray-300 border overflow-y-scroll">
                 {item.comments.map((comment) => {
-                  return (<p className="comment">
-                   <span className="commenter px-1 font-bold mr-1">
-                     {comment.postedBy.name} {" "}
-                   </span>
-                   <span className="comment-text">{comment.comment}</span>
-                 </p>)
+                  return (
+                    <div className="comment flex">
+                      <div className=" items-center">
+                        <img
+                          src={comment.postedBy.Photo ? comment.postedBy.Photo : default_profile}
+                          className="rounded-full h-10 w-10 object-contain border p-1 mx-2 mr-3 float-left flex"
+                          alt="User Image"
+                        />
+                      </div>
+                      <div className=" ">
+                        <span className="commenter font-bold mr-1">
+                          {comment.postedBy.userName}
+                        </span>
+                        <p className="comment-text antialiased font-sans">{comment.comment}</p>
+                        <p className=" mt-2"></p>
+                      </div>
+                    </div>
+                  );
                 })}
-               
               </div>
 
               {/* post content */}
               <div className="post-content">
-                <p className="justify-between px-3 pt-3">{item.likes.length} Likes</p>
+                <p className="justify-between px-3 pt-3">
+                  {item.likes.length} Likes
+                </p>
                 <p className=" px-3 mr-1 block">{item.caption}</p>
               </div>
 
@@ -276,7 +286,8 @@ function Posts() {
                     setComment(e.target.value);
                   }}
                 />
-                <button className="font-semibold text-blue-400 hover:text-blue-600"
+                <button
+                  className="font-semibold text-blue-400 hover:text-blue-600"
                   onClick={() => {
                     makeComment(comment, item._id);
                     toggleComment();

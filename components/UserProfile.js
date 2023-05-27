@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
-// import default_profile from '../assets/default_profile.webp'
-import Image from "next/image";
 import { useRouter } from 'next/router';
+import { AiFillHeart } from "react-icons/ai";
+import { FaComment } from 'react-icons/fa';
 
 function UserProfile() {
 
@@ -16,6 +16,7 @@ function UserProfile() {
 
   const [isFollow, setIsFollow] = useState(false)
 
+  const loggedUser =  JSON.parse(localStorage.getItem('user'))._id
 
   /* To Follow User */
   const followUser = (userId) => {
@@ -26,14 +27,14 @@ function UserProfile() {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
-        followId: userId 
+        followId: userId
       })
     })
-    .then((res) => res.json())
-    .then((data) => {
-      // console.log(data)
-      setIsFollow(true)
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data)
+        setIsFollow(true)
+      })
   }
 
   /* To Unfollow User */
@@ -45,14 +46,14 @@ function UserProfile() {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
       body: JSON.stringify({
-        followId: userId 
+        followId: userId
       })
     })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data)
-      setIsFollow(false)
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setIsFollow(false)
+      })
   }
 
 
@@ -68,7 +69,7 @@ function UserProfile() {
         // console.log(result);
         setUser(result.user);
         setPosts(result.posts);
-        if(result.user.followers.includes(
+        if (result.user.followers.includes(
           JSON.parse(localStorage.getItem('user'))._id
         )) {
           setIsFollow(true)
@@ -76,6 +77,7 @@ function UserProfile() {
       });
   }, [isFollow]);
 
+  const isProfile = (user._id == loggedUser)
 
   return (
     <div>
@@ -87,7 +89,7 @@ function UserProfile() {
           <header className="flex flex-wrap items-center p-4 md:py-8">
             <div className="md:w-3/12 md:ml-16">
               {/* <!-- profile image --> */}
-              <img src={user.Photo? user.Photo : default_profile} alt='profile' className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
+              <img src={user.Photo ? user.Photo : default_profile} alt='profile' className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
                      border-2 border-pink-600 p-1" />
             </div>
 
@@ -106,26 +108,28 @@ function UserProfile() {
                 </span>
 
                 {/* <!-- follow button --> */}
-                <button 
-                  className="bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded block text-center sm:inline-block hover:bg-blue-400"
-                  onClick={() => {
-                    if(isFollow) {
-                      unfollowUser(user._id)
-                    } else {
-                      followUser(user._id)
-                    }
-                    
-                  }}  
-                >
-                  {isFollow ? 'Unfollow': 'Follow'}
-                </button>
+                { !isProfile &&
+                  <button
+                    className="bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded block text-center sm:inline-block hover:bg-blue-400"
+                    onClick={() => {
+                      if (isFollow) {
+                        unfollowUser(user._id)
+                      } else {
+                        followUser(user._id)
+                      }
+
+                    }}
+                  >
+                    {isFollow ? 'Unfollow' : 'Follow'}
+                  </button>
+                }
               </div>
 
               {/* <!-- post, following, followers list for medium screens --> */}
               <ul className="hidden md:flex space-x-8 mb-4">
                 <li key='08'>
                   <span className="font-semibold">{posts.length} </span>
-                   posts
+                  posts
                 </li>
 
                 <li key='09'>
@@ -165,7 +169,7 @@ function UserProfile() {
                   text-center p-2 text-gray-600 leading-snug text-sm">
               <li key='11'>
                 <span className="font-semibold text-gray-800 block">{posts.length} </span>
-                 posts
+                posts
               </li>
 
               <li key='12'>
@@ -212,13 +216,11 @@ function UserProfile() {
                           <div className="flex justify-center items-center 
                                       space-x-4 h-full">
                             <span className="p-2">
-                              <i className="fas fa-heart"></i>
-                              412K
+                              <AiFillHeart /> {post.likes.length}
                             </span>
 
                             <span className="p-2">
-                              <i className="fas fa-comment"></i>
-                              2,909
+                              <FaComment /> {post.comments.length}
                             </span>
                           </div>
                         </div>

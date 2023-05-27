@@ -3,7 +3,8 @@ import Header from './Header'
 // import default_profile from '../assets/default_profile.webp'
 import Image from "next/image";
 import ProfilePic from './ProfilePic';
-
+import { AiFillHeart } from "react-icons/ai";
+import { FaComment } from 'react-icons/fa';
 function MyProfile() {
 
   const default_profile = 'https://cdn-icons-png.flaticon.com/128/3177/3177440.png'
@@ -11,12 +12,8 @@ function MyProfile() {
   const [posts, setPosts] = useState([])
   const [user, setUser] = useState('')
   const [changePic, setChangePic] = useState(false)
-  
-  // useEffect(() => {
-  //   // Perform localStorage action
-  //   setUser(JSON.parse(localStorage.getItem('user')))
-    
-  // }, [])
+
+
 
   useEffect(() => {
 
@@ -41,7 +38,7 @@ function MyProfile() {
 
   /* To Change Profile Pic */
   const changeProfile = () => {
-    if(changePic) {
+    if (changePic) {
       setChangePic(false)
     } else {
       setChangePic(true)
@@ -59,13 +56,13 @@ function MyProfile() {
           <header className="flex flex-wrap items-center p-4 md:py-8">
             <div className="md:w-3/12 md:ml-16">
               {/* <!-- profile image --> */}
-              <img 
-                src={user.Photo? user.Photo : default_profile} 
-                alt='profile' 
-                className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full border-2 border-pink-600 p-1 cursor-pointer" 
+              <img
+                src={user.Photo ? user.Photo : default_profile}
+                alt='profile'
+                className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full border-2 border-pink-600 p-1 cursor-pointer"
                 onClick={changeProfile}
-                />
-                
+              />
+
             </div>
 
             {/* <!-- profile meta --> */}
@@ -81,17 +78,12 @@ function MyProfile() {
                   <i className="fas fa-check text-white text-xs absolute inset-x-0
                                ml-1 mt-px"></i>
                 </span>
-
-                {/* <!-- follow button --> */}
-                <a href="#" className="bg-blue-500 px-2 py-1 
-                        text-white font-semibold text-sm rounded block text-center 
-                        sm:inline-block">Follow</a>
               </div>
 
               {/* <!-- post, following, followers list for medium screens --> */}
               <ul className="hidden md:flex space-x-8 mb-4">
                 <li key='10'>
-                  <span className="font-semibold">{ posts ? posts.length : '0'} </span>
+                  <span className="font-semibold">{posts ? posts.length : '0'} </span>
                   posts
                 </li>
 
@@ -179,13 +171,11 @@ function MyProfile() {
                           <div className="flex justify-center items-center 
                                       space-x-4 h-full">
                             <span className="p-2">
-                              <i className="fas fa-heart"></i>
-                              412K
+                              <AiFillHeart /> {post.likes.length}
                             </span>
 
                             <span className="p-2">
-                              <i className="fas fa-comment"></i>
-                              2,909
+                            <FaComment /> {post.comments.length}
                             </span>
                           </div>
                         </div>
@@ -196,17 +186,17 @@ function MyProfile() {
                 })
               }
             </div>
-            
+
           </div>
         </div>
-        
+
       </main>
 
       {
         changePic &&
-        <ProfilePic changeProfile={changeProfile}/>
+        <ProfilePic changeProfile={changeProfile} />
       }
-      
+
     </div>
   )
 }
