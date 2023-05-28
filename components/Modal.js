@@ -3,10 +3,19 @@ import React from 'react'
 import { useRecoilState } from 'recoil'
 import { Dialog, Transition } from '@headlessui/react'
 import { CameraIcon } from '@heroicons/react/outline'
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useRef, useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify';
+
 
 
 function Modal() {
+
+
+  const router = useRouter();
+
+  const notifyA = (msg) => toast.error(msg)
+  const notifyB = (msg) => toast.success(msg)
 
   const [open, setOpen] = useRecoilState(modalState);
   const filePickerRef = useRef(null);
@@ -33,10 +42,43 @@ function Modal() {
   }
 
 
-  /* posting image to cloudinary */
-  const postDetails =  () => {
+  useEffect(() => {
 
-    if(loading) return;
+    if (url) {
+      /* saving post to mongodb */
+      fetch("http://localhost:5000/createpost", {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+        },
+        body: JSON.stringify({
+          caption,
+          pic: url
+        })
+      })
+        .then(res => res.json())
+        .then((data) => {
+          if(data.error) {
+            notifyA(data.error)
+          }
+          else {
+            notifyB('Successfully Posted :)')
+            window.location.reload();
+          }
+        })
+        .catch(err => console.log(err))
+    }
+
+
+  }, [url])
+
+
+
+  /* posting image to cloudinary */
+  const postDetails = () => {
+
+    if (loading) return;
 
     setLoading(true);
 
@@ -48,29 +90,12 @@ function Modal() {
 
     fetch("https://api.cloudinary.com/v1_1/fantacloud/image/upload", {
       method: 'post',
-      body:data
+      body: data
     }).then((res) => res.json())
-    .then(data => {
-      setUrl(data.url)
-    })
-    .catch((err) => console.log(err))
-
-      
-
-      fetch("http://localhost:5000/createpost", {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
-      },
-      body: JSON.stringify({
-        caption,
-        pic: url
+      .then(data => {
+        setUrl(data.url)
       })
-    }).then(res=>res.json)
-    .catch(err => console.log(err))
-
-
+      .catch((err) => console.log(err))
 
     setOpen(false);
     setLoading(false)
@@ -160,7 +185,7 @@ function Modal() {
                           addImageToPost(e)
                           setImage(e.target.files[0])
                         }}
-                        
+
                       />
                     </div>
 
@@ -187,9 +212,9 @@ function Modal() {
               py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none
               focus:ring-2 focus:ring-offset-2 foucs:ring-red-500 sm:text-sm disabled:bg-gray-300
               disabled:cursor-not-allowed hover:disabled:bg-gray-300'
-                  onClick={() => {postDetails()}}
+                    onClick={() => { postDetails() }}
                   >
-                    {loading ? "Uploading...": "Upload Post"}
+                    {loading ? "Uploading..." : "Upload Post"}
                   </button>
                 </div>
 

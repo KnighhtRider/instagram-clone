@@ -12,12 +12,13 @@ const USER = mongoose.model('USER')
 
 /* To get user profile */
 router.get('/user/:id', (req, res) => {
-  console.log(req.params.id)
+  // console.log(req.params.id)
   USER.findOne({_id: req.params.id })
   .select('-password')
   .then(user => {
     POST.find({postedBy: req.params.id })
-    .populate('postedBy', '_id')
+    .populate('postedBy', '_id name userName Photo')
+    .populate('comments.postedBy', '_id name userName Photo')
     .then((posts) => {res.json({user, posts})}) 
     .catch((err) => console.log(err))
   })

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Header from './Header'
-// import default_profile from '../assets/default_profile.webp'
-import Image from "next/image";
+
 import ProfilePic from './ProfilePic';
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from 'react-icons/fa';
+import PostDetail from './PostDetail';
+
 function MyProfile() {
 
   const default_profile = 'https://cdn-icons-png.flaticon.com/128/3177/3177440.png'
@@ -12,6 +13,11 @@ function MyProfile() {
   const [posts, setPosts] = useState([])
   const [user, setUser] = useState('')
   const [changePic, setChangePic] = useState(false)
+
+  /* To Delete post */
+  const [show, setShow] = useState(false)
+  const [pics, setPics] = useState([])
+
 
 
 
@@ -46,11 +52,20 @@ function MyProfile() {
   }
 
 
+  /* To show and hide post */
+  const toggleDetails = (posts) => {
+    if (show) {
+      setShow(false)
+    } else {
+      setShow(true)
+      setPics(posts)
+    }
+  }
+
+
   return (
     <div>
-
       <Header />
-
       <main className="bg-gray-100 bg-opacity-25 relative">
         <div className="lg:w-8/12 lg:mx-auto mb-8">
           <header className="flex flex-wrap items-center p-4 md:py-8">
@@ -82,16 +97,16 @@ function MyProfile() {
 
               {/* <!-- post, following, followers list for medium screens --> */}
               <ul className="hidden md:flex space-x-8 mb-4">
-                <li key='10'>
+                <li key='18'>
                   <span className="font-semibold">{posts ? posts.length : '0'} </span>
                   posts
                 </li>
 
-                <li key='12'>
+                <li key='19'>
                   <span className="font-semibold">{user.followers ? user.followers.length : '0'} </span>
                   followers
                 </li>
-                <li key='13'>
+                <li key='23'>
                   <span className="font-semibold">{user.following ? user.following.length : '0'} </span>
                   following
                 </li>
@@ -142,7 +157,7 @@ function MyProfile() {
                       uppercase tracking-widest font-semibold text-xs text-gray-600
                       border-t">
               {/* <!-- posts tab is active --> */}
-              <li key='07' className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700">
+              <li key='17' className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700">
                 <a className="inline-block p-3" href="#">
                   <i className="fas fa-th-large text-xl md:text-xs"></i>
                   <span className="hidden md:inline">post</span>
@@ -162,12 +177,18 @@ function MyProfile() {
                       {/* <!-- post 1--> */}
                       <div className="post bg-gray-100 text-white relative pb-full md:mb-6">
                         {/* <!-- post image--> */}
-                        <img src={post.photo} className="w-full h-full absolute left-0 top-0 object-cover" alt="image" />
+                        <img src={post.photo} className="w-full h-full absolute left-0 top-0 object-cover" alt="image"
 
-                        <i className="fas fa-square absolute right-0 top-0 m-1"></i>
+                        />
+
+                        {/* <i className="fas fa-square absolute right-0 top-0 m-1"></i> */}
                         {/* <!-- overlay--> */}
                         <div className="overlay bg-gray-800 bg-opacity-25 w-full h-full absolute 
-                                  left-0 top-0 hidden">
+                                  left-0 top-0 hidden"
+                          onClick={() => {
+                            toggleDetails(post)
+                          }}
+                        >
                           <div className="flex justify-center items-center 
                                       space-x-4 h-full">
                             <span className="p-2">
@@ -175,7 +196,7 @@ function MyProfile() {
                             </span>
 
                             <span className="p-2">
-                            <FaComment /> {post.comments.length}
+                              <FaComment /> {post.comments.length}
                             </span>
                           </div>
                         </div>
@@ -191,10 +212,13 @@ function MyProfile() {
         </div>
 
       </main>
-
       {
         changePic &&
         <ProfilePic changeProfile={changeProfile} />
+      }
+
+      {show &&
+        <PostDetail item={pics} toggleDetails = {toggleDetails} />
       }
 
     </div>

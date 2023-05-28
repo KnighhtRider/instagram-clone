@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Instagram from "../assets/Instagram.jpeg";
-import vivek from '../assets/vivek.jpg'
 import logo from "../assets/logo.png";
-
 import { useRouter } from "next/navigation";
 
 import {
@@ -15,19 +13,38 @@ import {
   MenuIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
-
-
-import Login from "./Login";
 import { useRecoilState } from "recoil";
 import { modalState } from "@/atoms/modalAtom";
 
 
 function Header() {
 
-
+  const default_profile = 'https://cdn-icons-png.flaticon.com/128/3177/3177440.png'
+  
   const router = useRouter()
 
   const [open, setOpen] = useRecoilState(modalState);
+  const [user, setUser] = useState('')
+
+  useEffect(() => {
+
+
+    /* Fetch all posts */
+    fetch(`http://localhost:5000/user/${JSON.parse(localStorage.getItem('user'))._id}`, {
+      headers: {
+        'Authorization': "Bearer " + localStorage.getItem("jwt")
+      }
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result)
+        setUser(result.user)
+      })
+      .catch(err => console.log(err))
+
+
+  }, [])  
+
 
   return (
     <div className='shadow-sm border-b bg-white sticky top-0 z-50'>
@@ -109,7 +126,7 @@ function Header() {
             <div className='absolute -right-0 text-xs w-2 h-2 bg-red-500 rounded-full flex items-center justify-center text-white'></div>
           </div>
 
-          <Image src={vivek}
+          <img src={user.Photo ? user.Photo : default_profile}
             alt='profile pic'
             className='w-10 h-10 rounded-full cursor-pointer'
             onClick={() => {

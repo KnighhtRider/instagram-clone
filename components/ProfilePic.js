@@ -42,7 +42,7 @@ function ProfilePic({ changeProfile }) {
     .then((data) => {
       console.log(data);
       changeProfile()
-      window.location.reload() ;
+      window.location.reload();
     })
       .catch(err => console.log(err))
 

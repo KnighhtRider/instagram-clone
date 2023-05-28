@@ -10,7 +10,6 @@ import {
 import { HeartIcon as HeartIconFilled } from "@heroicons/react/solid";
 import Comments from "./Comments";
 import { GrClose } from "react-icons/gr";
-// import default_profile from '../assets/default_profile.webp'
 import Link from "next/link";
 
 function Posts() {
@@ -172,8 +171,10 @@ function Posts() {
                 />
               )}
 
-              <ChatIcon className="btn" />
-              <PaperAirplaneIcon className="btn" />
+              <ChatIcon className="btn" 
+              onClick={() => toggleComment(post)}
+              />
+              <PaperAirplaneIcon className="btn rotate-45" />
             </div>
 
             <BookmarkIcon className="btn" />
