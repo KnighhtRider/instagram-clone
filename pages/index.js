@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className= 'h-screen overflow-y-scroll scrollbar-hide'>
       <Head>
-        <title>Cam-Talk</title>
+        <title>Instagram-Clone</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
