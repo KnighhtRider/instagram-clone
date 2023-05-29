@@ -47,7 +47,7 @@ function Header() {
 
 
   return (
-    <div className='shadow-sm border-b bg-white sticky top-0 z-50'>
+    <div className='shadow-sm border-b bg-white sticky top-0 z-50 pt-1 pb-2 md:pt-0 md:pb-0'>
       <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
 
         {/* Left */}
@@ -57,17 +57,17 @@ function Header() {
           />
         </div>
 
-        <div className="relative lg:hidden w-10 flex-shrink-0 cursor-pointer mt-4">
+        <div className="relative lg:hidden w-6 flex-shrink-0 cursor-pointer pt-2">
           <Image src={logo} alt="cam-Talk" objectFit="contain"
             onClick={() => router.push('/')}
           />
         </div>
 
         {/* Middle - Search input field */}
-        <div className='max-w-xs'>
+        <div className='max-w-xs hidden md:inline-grid'>
           <div className="relative mt-1 p-3 rounded-md">
             <div className="absolute inset-y-0 pl-3 flex items-center pointer-events-none ">
-              <SearchIcon className="h-5 w-5 text-gray-500" />
+              <SearchIcon className="h-5 w-5 text-gray-500 " />
             </div>
             <input
               className="bg-gray-50 block w-full pl-10 sm:text-sm border-gray-300 focus:ring-black focus:border-black rounded-md"
@@ -126,9 +126,11 @@ function Header() {
             <div className='absolute -right-0 text-xs w-2 h-2 bg-red-500 rounded-full flex items-center justify-center text-white'></div>
           </div>
 
+
+
           <img src={user.Photo ? user.Photo : default_profile}
             alt='profile pic'
-            className='w-10 h-10 rounded-full cursor-pointer'
+            className='hidden md:inline-grid w-10 h-10 rounded-full cursor-pointer'
             onClick={() => {
               router.push('/myprofile')
             }}

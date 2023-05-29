@@ -72,10 +72,10 @@ function ProfilePic({ changeProfile }) {
     <div className='darkBg absolute'>
       <div className=' changePic centered text-center p-6'>
         <div>
-          <h2 className=' font-bold text-2xl text-black'>Change Profile Photo</h2>
+          <h2 className=' font-bold md:text-2xl text-black text-sm '>Change Profile Photo</h2>
         </div>
         <div className=' justify-center items-center font-bold border-gray border-t-2 mt-3'>
-          <button className='text-blue-500'
+          <button className='text-blue-500 md:text-2xl text-black text-sm'
             onClick={handleClick}
           >Upload Photo</button>
           <input 
@@ -87,7 +87,7 @@ function ProfilePic({ changeProfile }) {
           />
         </div>
         <div>
-          <button className='font-bold text-red-500 border-gray border-t-2 mt-3 w-full'
+          <button className='font-bold text-red-500 border-gray border-t-2 mt-3 w-full md:text-2xl text-black text-sm'
             onClick={() => {
               setUrl(null)
               postPic()
@@ -95,8 +95,8 @@ function ProfilePic({ changeProfile }) {
           >Remove Current Photo</button>
         </div>
         <div>
-          <button className='text-black-400 border-gray border-t-2 mt-3 w-full'
-            onClick={changeProfile}
+          <button className='text-black-400 border-gray border-t-2 mt-3 w-full md:text-2xl text-black text-sm'
+            onClick={changeProfile} 
           >Cancel</button>
         </div>
       </div>

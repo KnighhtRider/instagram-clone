@@ -3,6 +3,7 @@ import Header from './Header'
 import { useRouter } from 'next/router';
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from 'react-icons/fa';
+import MobileNavbar from './MobileNavbar';
 
 function UserProfile() {
 
@@ -87,7 +88,7 @@ function UserProfile() {
       <main className="bg-gray-100 bg-opacity-25">
         <div className="lg:w-8/12 lg:mx-auto mb-8">
           <header className="flex flex-wrap items-center p-4 md:py-8">
-            <div className="md:w-3/12 md:ml-16">
+            <div className=" md:w-3/12 md:ml-16">
               {/* <!-- profile image --> */}
               <img src={user.Photo ? user.Photo : default_profile} alt='profile' className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
                      border-2 border-pink-600 p-1" />
@@ -96,7 +97,7 @@ function UserProfile() {
             {/* <!-- profile meta --> */}
             <div className="w-8/12 md:w-7/12 ml-4">
               <div className="md:flex md:flex-wrap md:items-center mb-4">
-                <h2 className="text-3xl inline-block font-light md:mr-2 mb-2 sm:mb-0">
+                <h2 className="md:text-3xl text-2xl inline-block font-light md:mr-2 mb-2 sm:mb-0">
                   {user.name}
                 </h2>
 
@@ -236,6 +237,9 @@ function UserProfile() {
           </div>
         </div>
       </main>
+
+      <MobileNavbar />
+
     </div>
   )
 }

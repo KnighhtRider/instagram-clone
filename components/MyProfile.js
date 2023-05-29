@@ -5,6 +5,7 @@ import ProfilePic from './ProfilePic';
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from 'react-icons/fa';
 import PostDetail from './PostDetail';
+import MobileNavbar from './MobileNavbar';
 
 function MyProfile() {
 
@@ -83,7 +84,7 @@ function MyProfile() {
             {/* <!-- profile meta --> */}
             <div className="w-8/12 md:w-7/12 ml-4">
               <div className="md:flex md:flex-wrap md:items-center mb-4">
-                <h2 className="text-3xl inline-block font-light md:mr-2 mb-2 sm:mb-0">
+                <h2 className="md:text-3xl text-2xl inline-block font-light md:mr-2 mb-2 sm:mb-0">
                   {user.userName}
                 </h2>
 
@@ -123,7 +124,7 @@ function MyProfile() {
 
             {/* <!-- user meta form small screens --> */}
             <div className="md:hidden text-sm my-2">
-              <h1 className="font-semibold">Mr Travlerrr...</h1>
+              <h1 className="font-semibold">{user.name}</h1>
               <span>Travel, Nature and Music</span>
               <p>Lorem ipsum dolor sit amet consectetur</p>
             </div>
@@ -220,6 +221,8 @@ function MyProfile() {
       {show &&
         <PostDetail item={pics} toggleDetails = {toggleDetails} />
       }
+
+      <MobileNavbar />
 
     </div>
   )

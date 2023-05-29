@@ -125,28 +125,28 @@ function Posts() {
   return (
     <div>
       {posts.map((post) => (
-        <div className="flex flex-col bg-white mx-0.5 my-1 rounded-sm lg:px-16 pt-4 min-h-max">
+        <div className=" flex flex-col bg-white rounded-sm pt-4 md:px-16">
           {/* Header */}
-          <div className=" items-center p-2 flow-root">
+          <div className=" items-center flow-root">
             <img
               src={post.postedBy.Photo ? post.postedBy.Photo : default_profile}
-              className="rounded-full h-12 w-12 object-contain border p-1 mr-3 float-left"
+              className="rounded-full h-12 w-12 object-contain border p-1 mr-3 float-left flex"
               alt="User Image"
             />
             <Link href={`/profile/${post.postedBy._id}`}>
-              <p className="font-bold cursor-pointer mt-2">
+              <span className="font-bold cursor-pointer mt-2">
                 {post.postedBy.userName}
-              </p>
+              </span>
             </Link>
-            <DotsHorizontalIcon className="h-5 float-right cursor-pointer " />
+            <DotsHorizontalIcon className="h-6 float-right cursor-pointer" />
           </div>
 
           {/* img */}
-          <div className="w-full relative">
+          <div className=" relative ">
             <img
               src={post.photo}
               alt="Post Image"
-              className="object-contain h-auto border transition-shadow rounded-lg max-w-full"
+              className=" border transition-shadow rounded-lg"
             />
           </div>
 
@@ -223,9 +223,9 @@ function Posts() {
       {/* show comments Section */}
 
       {show && (
-        <div className="show-comment z-10">
+        <div className="show-comment z-10 -top-10 md:top-0">
           <div className="comment-container">
-            <div className="post-pic">
+            <div className="post-pic hidden md:inline-grid">
               <img src={item.photo} className="w-[700px] h-full" />
             </div>
             <div className="details">
@@ -277,7 +277,7 @@ function Posts() {
 
               {/* Add Comment */}
               <div className="flex items-center px-3">
-                <EmojiHappyIcon className="h-7 flex" />
+                <EmojiHappyIcon className="md:inline-grid h-7 flex" />
                 <input
                   type="text"
                   placeholder="Add a comment..."
@@ -300,10 +300,10 @@ function Posts() {
             </div>
           </div>
           <div
-            className="close-comment cursor-pointer"
+            className="close-comment cursor-pointer top-16 right-16 md:top-[18%] md:right-[16%]"
             onClick={() => toggleComment()}
           >
-            <GrClose className="w-10 h-10 font-bold cursor-pointer" />
+            <GrClose className=" w-8 h-8 md:w-10 md:h-10 font-bold cursor-pointer" />
           </div>
         </div>
       )}

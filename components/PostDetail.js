@@ -42,7 +42,7 @@ function PostDetail({ item, toggleDetails }) {
 
     <div className="show-comment z-10">
       <div className="comment-container">
-        <div className="post-pic">
+        <div className="post-pic hidden md:inline-grid">
           <img src={item.photo} className="w-[700px] h-full" />
         </div>
         <div className="details">
