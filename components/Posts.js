@@ -226,7 +226,7 @@ function Posts() {
         <div className="show-comment z-10 -top-10 md:top-0">
           <div className="comment-container">
             <div className="post-pic hidden md:inline-grid">
-              <img src={item.photo} className="w-[700px] h-full" />
+              <img src={item.photo} className="overflow-hidden h-full" />
             </div>
             <div className="details">
               {/* post Header */}

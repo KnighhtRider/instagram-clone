@@ -93,7 +93,7 @@
     position: absolute;
     top: 25%;
     left: 10%;
-    height: 400px;
+    height: 500px;
   }
 
   .post-pic {
@@ -104,7 +104,7 @@
 
   .post-pic img {
     object-fit: contain;
-    /* width: 100%; */
+    width: 700px;
   }
 
   .details {
