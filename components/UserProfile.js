@@ -10,8 +10,13 @@ function UserProfile() {
   const default_profile = 'https://cdn-icons-png.flaticon.com/128/3177/3177440.png'
 
   const router = useRouter();
-  const userid = router.query.userid
-  // console.log(userid);
+  // console.log(userid); 
+  const [userID, setuserID] = useState(router.query.userid)
+
+  useEffect(() => {
+    setuserID(router.query.userid)
+  }, [userID]) 
+
   const [user, setUser] = useState('')
   const [posts, setPosts] = useState([])
 
@@ -60,7 +65,7 @@ function UserProfile() {
 
   /* Fetch user and its posts */
   useEffect(() => {
-    fetch(`http://localhost:5000/user/${userid}`, {
+    fetch(`http://localhost:5000/user/${userID}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
