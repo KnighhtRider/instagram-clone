@@ -11,18 +11,6 @@ export default function Home() {
   const router = useRouter();
   const token = getTokenFromLocalStorage();
 
-  useEffect(() => {
-    if (!token) {
-      // Redirect the user to the login page if token is not found
-      router.push('/login');
-    }
-  }, [token, router]);
-
-  if (!token) {
-    // You can show a loading state here while redirecting
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className='h-screen overflow-y-scroll scrollbar-hide'>
       <Head>

@@ -68,7 +68,7 @@ function Signup() {
     <div className="h-screen flex flex-row justify-center items-center">
       <div className=" bg-gray-100 flex flex-col justify-center items-center lg:col-span-1">
         <div className="bg-white border w-80 pt-8 flex items-center flex-col mb-3">
-          <h1 class="bg-no-repeat instagram-logo"></h1>
+          <h1 className="bg-no-repeat instagram-logo"></h1>
           <p className='text-center text-base px-5 pt-5 font-semibold text-gray-500'>Sign up to see photos and videos from your friends.</p>
 
           <button className="mt-4 flex bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded w-64 justify-center">
@@ -133,17 +133,17 @@ function Signup() {
           </div>
 
         </div>
-        <div class="bg-white border border-gray-300 text-center w-80 py-4">
-          <span class="text-sm">Have an account?</span>
-          <a class="text-blue-500 text-sm font-semibold hover:text-blue-700 cursor-pointer"
+        <div className="bg-white border border-gray-300 text-center w-80 py-4">
+          <span className="text-sm">Have an account?</span>
+          <a className="text-blue-500 text-sm font-semibold hover:text-blue-700 cursor-pointer"
             onClick={() => router.push('/login')}
           > Log in</a>
         </div>
-        <div class="mt-3 text-center">
-          <span class="text-xs">Get the app</span>
-          <div class="flex mt-3 space-x-2">
-            <div class="bg-no-repeat apple-store-logo"></div>
-            <div class="bg-no-repeat google-store-logo"></div>
+        <div className="mt-3 text-center">
+          <span className="text-xs">Get the app</span>
+          <div className="flex mt-3 space-x-2">
+            <div className="bg-no-repeat apple-store-logo"></div>
+            <div className="bg-no-repeat google-store-logo"></div>
           </div>
         </div>
       </div>

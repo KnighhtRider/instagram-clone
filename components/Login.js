@@ -69,7 +69,7 @@ function Login() {
       </div>
       <div className=" bg-gray-100 flex flex-col justify-center items-center lg:col-span-1">
         <div className="bg-white border w-80 pt-8 flex items-center flex-col mb-3">
-          <h1 class="bg-no-repeat instagram-logo"></h1>
+          <h1 className="bg-no-repeat instagram-logo"></h1>
           <div className="mt-8 w-64 flex flex-col">
             <input
               autofocus
@@ -115,19 +115,19 @@ function Login() {
             Forgot password?
           </a>
         </div>
-        <div class="bg-white border border-gray-300 text-center w-80 py-4">
-          <span class="text-sm"
+        <div className="bg-white border border-gray-300 text-center w-80 py-4">
+          <span className="text-sm"
             
           >Don't have an account?</span>
-          <a class="text-blue-500 text-sm font-semibold cursor-pointer ml-2 hover:text-blue-700"
+          <a className="text-blue-500 text-sm font-semibold cursor-pointer ml-2 hover:text-blue-700"
             onClick={() => router.push('/signup')}
           >Sign up</a>
         </div>
-        <div class="mt-3 text-center">
-          <span class="text-xs">Get the app</span>
-          <div class="flex mt-3 space-x-2">
-            <div class="bg-no-repeat apple-store-logo"></div>
-            <div class="bg-no-repeat google-store-logo"></div>
+        <div className="mt-3 text-center">
+          <span className="text-xs">Get the app</span>
+          <div className="flex mt-3 space-x-2">
+            <div className="bg-no-repeat apple-store-logo"></div>
+            <div className="bg-no-repeat google-store-logo"></div>
           </div>
         </div>
       </div>

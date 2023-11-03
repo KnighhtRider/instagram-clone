@@ -48,7 +48,7 @@ function MobileNavbar() {
 
   return (
 
-    <div class="fixed bottom-0 w-full left-0 z-50 h-10 pt-1 bg-white border-t border-gray-200 md:hidden  dark:border-gray-600">
+    <div className="fixed bottom-0 w-full left-0 z-50 h-10 pt-1 bg-white border-t border-gray-200 md:hidden  dark:border-gray-600">
 
       <div className='flex items-center justify-center space-x-14 '>
 
